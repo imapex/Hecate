@@ -1,0 +1,93 @@
+echo "This setup script will install Hecate"
+echo "into a Mantl (http://mantl.io) instance."
+echo
+echo "If you would rather run Hecate in a local docker"
+echo "instance, please run ./docker-install.sh"
+echo "Press CTRL-C to exit this script to do so."
+echo
+echo "If you do not have a mantl instance availble, you can"
+echo "use the Cisco DevNet instance. Would you like to do so?"
+read SB
+if [ ${SB} == "yes" ]
+then
+  control_address=mantlsandbox.cisco.com
+  mantl_user=admin
+  mantl_password=1vtG@lw@y
+  mantl_domain=app.mantldevnetsandbox.com
+  control_port=8080
+else
+  echo Please provide basic details on your Mantl install.
+  echo
+  echo "What is the address of your Control Servers?  "
+  echo "eg: control.mantl.internet.com"
+  read control_address
+  control_port=8080
+  echo "  The default port for Marathon API is 8080.  "
+  echo "  Does your deployment use a different port?  yes/no"
+  read ANSWER
+
+  if [ ${ANSWER} == "yes" ]
+  then
+      echo "What port does Marathon API listen on?"
+      read control_port
+  fi
+  echo
+  echo "What is the username for your Mantl account?  "
+  read mantl_user
+  echo
+  echo
+  echo "What is the password for your Mantl account?  "
+  read -s mantl_password
+  echo
+  echo
+  echo "What is the mantl domain for your deployed apps?  "
+  read mantl_domain
+  echo
+  echo
+
+fi
+
+echo "What is the docker hub username to pull containers from?"
+echo "You may simply press enter to default to pre-built containers"
+echo "created by the authors for demonstration purposes."
+echo
+docker_username=sluzynsk
+read ANSWER
+if [ ${ANSWER} ]
+then
+  docker_username = ANSWER
+fi
+echo
+
+echo "*******************************************************"
+echo "The Mantl Setup Infromation is being saved in this session as "
+echo "environment variables.  They will be removed as soon "
+echo "as you close this terminal session.  "
+
+export MANTL_CONTROL="${control_address}:${control_port}"
+export MANTL_USER="$mantl_user"
+export MANTL_PASSWORD="$mantl_password"
+export MANTL_DOMAIN="$mantl_domain"
+export DOCKERUSER="$docker_username"
+export TAG="latest"
+
+echo
+echo "What is the directory in which you want to place your app?"
+read deployment_dir
+echo
+
+export DEPLOYMENT_DIR="$deployment_dir"
+
+echo
+echo "What do you want your deployment to be named?  "
+echo "For example, with a name of \"hecate\", "
+echo "the application will be located at  /$DEPLOYMENT_DIR-hecate-$DOCKERUSER.$MANTL_DOMAIN."
+read deployment_name
+echo
+
+export DEPLOYMENT_NAME="$deployment_name"
+
+echo "Marathon API calls will be sent to: "
+echo "https://{$MANTL_CONTROL}/"
+
+echo "To complete the install, please run ./hecate-install.sh"

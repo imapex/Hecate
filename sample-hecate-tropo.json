@@ -1,0 +1,27 @@
+{
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "DOCKERUSER/edqos_web:latest",
+            "forcePullImage": true,
+            "network": "BRIDGE",
+            "portMappings": [{
+                "containerPort": 5000,
+                "hostPort": 0
+            }]
+        },
+        "forcePullImage": true
+    },
+    "healthChecks": [{
+        "protocol": "TCP",
+        "portIndex": 0
+    }],
+    "id": "/DEPLOYMENTDIR/DEPLOYMENTNAME/web",
+    "instances": 1,
+    "cpus": 0.1,
+    "mem": 16,
+    "env": {
+      "EDQOS_DATA_SERVER": "DATASERVER",
+      "EDQOS_APP_SERVER": "APPSERVER"
+    }
+}
