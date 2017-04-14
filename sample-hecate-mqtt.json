@@ -1,0 +1,23 @@
+{
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "eclipse-mosquitto:latest",
+            "forcePullImage": true,
+            "network": "BRIDGE",
+            "portMappings": [{
+                "containerPort": 1883,
+                "hostPort": 0
+            }]
+        },
+        "forcePullImage": true
+    },
+    "healthChecks": [{
+        "protocol": "TCP",
+        "portIndex": 0
+    }],
+    "id": "/DEPLOYMENTDIR/DEPLOYMENTNAME/DOCKERUSER/mqtt",
+    "instances": 1,
+    "cpus": 0.1,
+    "mem": 16
+}

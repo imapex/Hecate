@@ -1,0 +1,33 @@
+# Event Driven QoS (edqos) - https://github.com/imapex/edqos_app
+# Version 1.0
+#
+version: "2"
+
+services:
+  app:
+    image: DOCKERUSER/hecate:latest
+    ports:
+      - 5001:5001
+    depends_on:
+      - mqtt
+    restart: always
+    environment:
+      - MQTT_SERVER=mqtt:1883
+
+  mqtt:
+    image: eclipse-mosquitto:latest
+    ports:
+      - 1883:1883
+      - 9001:9001
+    restart: always
+
+  client:
+    image: DOCKERUSER/hecate-tropo:latest
+    ports:
+     - 5000:5000
+    depends_on:
+      - mqtt
+      - app
+    restart: always
+    environment:
+     - MQTT_SERVER=mqtt:1883
