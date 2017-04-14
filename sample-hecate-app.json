@@ -2,11 +2,11 @@
     "container": {
         "type": "DOCKER",
         "docker": {
-            "image": "DOCKERUSER/edqos_app:latest",
+            "image": "DOCKERUSER/hecate:latest",
             "forcePullImage": true,
             "network": "BRIDGE",
             "portMappings": [{
-                "containerPort": 5001,
+                "containerPort": 5000,
                 "hostPort": 0
             }]
         },
@@ -16,14 +16,11 @@
         "protocol": "TCP",
         "portIndex": 0
     }],
-    "id": "/DEPLOYMENTDIR/DEPLOYMENTNAME/app",
+    "id": "/DEPLOYMENTDIR/DEPLOYMENTNAME/DOCKERUSER/app",
     "instances": 1,
     "cpus": 0.1,
     "mem": 16,
     "env": {
-      "EDQOS_DATA_SERVER": "DATASERVER",
-      "APIC_SERVER": "sandboxapic.cisco.com",
-      "APIC_USERNAME": "devnetuser",
-      "APIC_PASSWORD": "Cisco123!"
+      "MQTT_SERVER": "MQTTSERVER"
     }
 }

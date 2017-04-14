@@ -11,7 +11,7 @@
 echo " "
 echo "***************************************************"
 echo Checking if hecate has already been deployed with deployment name \"$DEPLOYMENT_NAME\" in $DEPLOYMENT_DIR
-python mantl_utils.py applicationexists $DEPLOYMENT_DIR/$DEPLOYMENT_NAME/web
+python mantl_utils.py applicationexists $DEPLOYMENT_DIR/$DEPLOYMENT_NAME/$DOCKERUSER/app
 if [ $? -eq 1 ]
 then
     echo "    Deployment name available, continuing."
